@@ -28,7 +28,12 @@ app.get("/api", async (req, res) => {
 
     let page = await browser.newPage();
     await page.goto("https://www.google.com");
-    res.send(await page.title());
+
+    const imgBuffer = await page.screenshot({ omitBackground: true });
+
+    res.setHeader("Content-Type", "image/png");
+    res.send(imgBuffer);
+    // res.send(await page.title());
   } catch (err) {
     console.error(err);
     return null;
